@@ -1,22 +1,26 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src/",
     "paths": {
-      "~/*": [
-        "src/core/*"
+      "~/theme/*": [
+        "core/*"
       ],
       "~/layouts/*": [
-        "src/layouts/*"
+        "layouts/*"
       ],
       "~/lib/*": [
-        "src/lib/*"
+        "lib/*"
       ],
       "~/styles/*": [
-        "src/styles/*"
+        "styles/*"
       ],
       "~/types/*": [
-        "src/types/*"
+        "types/*"
+      ],
+      "~/utils/*": [
+        "utils/*"
       ]
+
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -35,6 +39,7 @@
     "noUncheckedIndexedAccess": true
   },
   "include": [
+    "src/types/next-auth.d.ts",
     "next-env.d.ts",
     "next-auth.d.ts",
     "**/*.ts",

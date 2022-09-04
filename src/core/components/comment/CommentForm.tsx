@@ -1,7 +1,8 @@
-import { Box, Button, TextArea } from "@laodeaksarr/design-system";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { trpc } from "src/utils/trpc";
+import { Box, Button, TextArea } from "@laodeaksarr/design-system";
+
+import { trpc } from "~/utils/trpc";
 
 function CommentForm({ parentId }: { parentId?: string }) {
   const [body, setBody] = useState("");

@@ -1,29 +1,33 @@
-function formComments(comments:any /* Comment[] */) {
-    const map=new Map()
+import type { Comment, CommentWithChildren } from "~/utils/trpc";
 
-    const roots:any[]/* CommentWithChildren[] */ = []
+function formComments(comments: Comment[]) {
+  const map = new Map();
 
-    for (let i = 0; i < confirm.length; i++) {
-        const commentId = comments[i];
-        
-        map.set(commentId, i)
+  const roots: CommentWithChildren[] = [];
 
-        comments[i].children = []
+  for (let i = 0; i < comments.length; i++) {
+    const commentId = comments[i]?.id;
 
-        if (comments[i].parentId) {
-            const parentCommentIndex: number= map.get(comments[i]?.parentId)
+    map.set(commentId, i);
 
-            {comments[parentCommentIndex].children.push(
-                comments[i]
-            )}
+    (comments[i] as CommentWithChildren).children = [];
 
-            continue
-        }
+    if ((comments[i] as CommentWithChildren).parentId) {
+      const parentCommentIndex: number = map.get(comments[i]?.parentId);
 
-        roots.push(comments[i])
+      {
+        (comments[parentCommentIndex] as CommentWithChildren).children.push(
+          comments[i] as CommentWithChildren
+        );
+      }
+
+      continue;
     }
 
-    return roots
+    roots.push(comments[i] as CommentWithChildren);
+  }
+
+  return roots;
 }
 
-export default formComment
+export default formComments;

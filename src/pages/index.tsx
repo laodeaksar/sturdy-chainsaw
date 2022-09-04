@@ -1,10 +1,9 @@
 import type { NextPage } from "next";
-import { trpc } from "../utils/trpc";
 import { customAlphabet } from "nanoid";
 import { useRouter } from "next/router";
 import { Suspense } from "react";
 
-import Layout from "~/layout";
+import Layout from "~/theme/layout";
 import { Grid } from "@laodeaksarr/design-system";
 
 const nanoid = customAlphabet("abcdefghijklmnopqrstuvqxyz0123456789", 4);

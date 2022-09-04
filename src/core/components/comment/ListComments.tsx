@@ -1,5 +1,7 @@
-import { Box, Button, Card, Text } from "@laodeaksarr/design-system";
 import { useState } from "react";
+import { Box, Button, Card, Text } from "@laodeaksarr/design-system";
+
+import { CommentWithChildren } from "~/utils/trpc";
 import CommentForm from "./CommentForm";
 
 function getReplyCount(count: number) {
@@ -37,12 +39,12 @@ function CommentActions({
   );
 }
 
-function Comment({ comment }: any) {
+function Comment({ comment }: { comment: CommentWithChildren }) {
   return (
     <Card>
       <Box>
         <Text>{comment.user.name}</Text>
-        <Text>{comment.publishedAt}</Text>
+        <Text>{comment.createdAt.toISOString()}</Text>
         <Text>{comment.body}</Text>
       </Box>
 
@@ -58,11 +60,7 @@ function Comment({ comment }: any) {
   );
 }
 
-function ListComment({
-  comments,
-}: {
-  comments: any[] /*CommentWithChildren[]*/;
-}) {
+function ListComment({ comments }: { comments: CommentWithChildren[] }) {
   return (
     <Box>
       {comments?.map((comment) => {

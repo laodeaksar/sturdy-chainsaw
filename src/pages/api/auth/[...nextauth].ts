@@ -1,38 +1,74 @@
-import NextAuth  from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GitHubProvider from "next-auth/providers/github";
 
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from "../../../server/db/client";
-import { env } from "../../../server/env";
+import { prisma } from "server/db/client";
+import { env } from "env/server.mjs";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   // Include user.id on session
-  // callbacks: {
-  //   session({ session, user }) {
-  //     if (session.user) {
-  //       session.user.id = user.id;
-  //     }
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    session({ session, user, token }) {
+      if (session.user) {
+        session.user.id = token.sub as string;
+      }
+      return session;
+    },
+  },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    // ...add more providers here
     CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
+      // The credentials is used to generate a suitable form on the sign in page.
+      // You can specify whatever fields you are expecting to be submitted.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        name: {
-          label: "Name",
-          type: "text",
-          placeholder: "Enter your name",
-        },
+        username: { label: "Username", type: "text", placeholder: "tom" },
       },
-      async authorize(credentials, _req) {
-        const user = { id: 1, name: credentials?.name ?? "J Smith" };
-        return user;
+      async authorize(credentials, req) {
+        if (!credentials?.username) {
+          return null;
+        }
+
+        const email = `${credentials.username}@example.com`;
+
+        const existingUser = await prisma.user.findUnique({
+          where: {
+            email,
+          },
+        });
+
+        if (existingUser) {
+          return existingUser;
+        }
+
+        try {
+          const newUser = await prisma.user.create({
+            data: {
+              name: credentials.username,
+              email,
+            },
+          });
+
+          await prisma.account.create({
+            data: {
+              userId: newUser.id,
+              provider: "credentials",
+              providerAccountId: "credentials",
+              type: "credentials",
+            },
+          });
+
+          return newUser;
+        } catch (e) {
+          console.error(e);
+          return null;
+        }
       },
     }),
     GitHubProvider({

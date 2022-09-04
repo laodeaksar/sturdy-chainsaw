@@ -1,4 +1,3 @@
-// src/pages/_app.tsx
 import "~/styles/globals.css";
 import "~/styles/font.css";
 
@@ -15,7 +14,6 @@ import {
   ThemeProvider,
   Tooltip,
 } from "@laodeaksarr/design-system";
-import { Head } from "~/components/Seo";
 
 const MyApp: AppType = ({
   Component,
@@ -25,7 +23,6 @@ const MyApp: AppType = ({
 
   return (
     <ThemeProvider>
-      <Head />
       <SessionProvider session={session}>
         <Tooltip.Provider>
           <Component {...pageProps} />
@@ -95,3 +92,4 @@ export default withTRPC<AppRouter>({
    */
   ssr: false,
 })(MyApp);
+

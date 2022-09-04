@@ -15,8 +15,6 @@ import {
   TextInput,
 } from "@laodeaksarr/design-system";
 
-import SEO from "../core/components/Seo";
-
 import Layout from "../core/layout";
 import { trpc } from "../utils/trpc";
 import { Guestbook } from "../constants/schemas";
@@ -249,7 +247,6 @@ function GuestbookEntries() {
 export default function Guestbook() {
   return (
     <Layout footer header headerProps={{ offsetHeight: 256 }}>
-      <SEO title="Guestbook Page" />
       <Grid columns="medium" gapX={4} gapY={12} all>
         <div>
           <H2>Guestbook</H2>
