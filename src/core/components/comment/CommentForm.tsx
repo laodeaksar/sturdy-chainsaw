@@ -1,28 +1,33 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { Box, Button, TextArea } from "@laodeaksarr/design-system";
+import { useRouter } from 'next/router';
+import { Box, Button, TextArea } from '@laodeaksarr/design-system';
 
-import { trpc } from "~/utils/trpc";
+import { trpc } from '~/utils/trpc';
+import { useForm } from 'react-hook-form';
 
 function CommentForm({ parentId }: { parentId?: string }) {
-  const [body, setBody] = useState("");
   const router = useRouter();
+
+  const form = useForm({
+    defaultValues: {
+      body: ''
+    }
+  });
 
   const permalink = router.query.permalink as string;
 
   const utils = trpc.useContext();
 
-  const { isLoading, mutate } = trpc.useMutation(["comments.add-comment"], {
+  const { isLoading, mutate } = trpc.useMutation(['comments.add-comment'], {
     onSuccess: () => {
-      utils.invalidateQueries(["comments.all-comments", { permalink }]);
-    },
+      utils.invalidateQueries(['comments.all-comments', { permalink }]);
+    }
   });
 
   function handleSubmit(values: { body: string }) {
     const payload = {
       ...values,
       permalink,
-      parentId,
+      parentId
     };
 
     return mutate(payload);
@@ -30,18 +35,17 @@ function CommentForm({ parentId }: { parentId?: string }) {
 
   return (
     <Box>
-      <form onSubmit={() => handleSubmit}>
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
         <TextArea
           required
+          id="comment"
           disabled={isLoading}
           placeholder="Comment"
-          id="comment"
           aria-label="comment"
-          value={body}
-          onChange={(e) => setBody(e.currentTarget.value)}
+          {...form.register('body')}
         />
         <Button variant="primary" type="submit">
-          {parentId ? "Post reply" : "Post Comment"}
+          {parentId ? 'Post reply' : 'Post Comment'}
         </Button>
       </form>
     </Box>

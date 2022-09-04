@@ -1,8 +1,8 @@
-const { env } = require("./src/server/env");
+const { env } = require("./src/env/server.mjs");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
 };
 
-module.exports = nextConfig;
+export default nextConfig;

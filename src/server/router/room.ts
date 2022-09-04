@@ -1,12 +1,13 @@
 import { createRouter } from "./context";
 import { randomUUID } from "crypto";
+import * as trpc from '@trpc/server';
+
 import {
   Message,
   messageSubSchema,
   sendMessageSchema,
-} from "../../constants/schemas";
-import { Events } from "../../constants/events";
-import * as trpc from "@trpc/server";
+} from "constants/schemas";
+import { Events } from "constants/events";
 
 export const roomRouter = createRouter()
   .mutation("send-message", {

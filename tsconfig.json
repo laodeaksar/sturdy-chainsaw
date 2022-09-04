@@ -39,7 +39,6 @@
     "noUncheckedIndexedAccess": true
   },
   "include": [
-    "src/types/next-auth.d.ts",
     "next-env.d.ts",
     "next-auth.d.ts",
     "**/*.ts",

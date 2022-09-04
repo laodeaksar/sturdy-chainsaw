@@ -1,5 +1,3 @@
-import { serialize } from "../serialize";
-
 export interface TwitterResponse {
   count: number;
   error?: string;
@@ -23,7 +21,7 @@ const getAccessToken = async () => {
       Authorization: `Basic ${basic}`,
       "Content-Type": "application/x-www-form-urlencoded;charset:utf-8",
     },
-    body: serialize({ grant_type: "client_credentials" }),
+    body: new URLSearchParams({ grant_type: "client_credentials" }),
   });
 
   return response.json();

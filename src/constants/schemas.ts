@@ -1,4 +1,6 @@
-import z from "zod";
+// import z from "zod";
+
+import { z } from "zod";
 
 export const sendMessageSchema = z.object({
   roomId: z.string(),

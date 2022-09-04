@@ -1,36 +1,36 @@
-import { Session } from "next-auth";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { Session } from 'next-auth';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
-import { Grid } from "@laodeaksarr/design-system";
+import { Button, Grid, TextArea } from '@laodeaksarr/design-system';
 
-import { Message } from "../../constants/schemas";
-import Layout from "../../core/layout";
-import { trpc } from "../../utils/trpc";
+import { Message } from '../../constants/schemas';
+import Layout from '../../core/layout';
+import { trpc } from '../../utils/trpc';
 
 function MessageItem({
   message,
-  session,
+  session
 }: {
   message: Message;
   session: Session;
 }) {
   const baseStyles =
-    "mb-4 text-md w-7/12 p-4 text-gray-700 border border-gray-700 rounded-md";
+    'mb-4 text-md w-7/12 p-4 text-gray-700 border border-gray-700 rounded-md';
 
   const liStyles =
     message.sender.name === session.user?.name
       ? baseStyles
-      : baseStyles.concat(" self-end bg-gray-700 text-white");
+      : baseStyles.concat(' self-end bg-gray-700 text-white');
 
   return (
     <li className={liStyles}>
       <div className="flex">
         <time>
-          {message.sentAt.toLocaleTimeString("en-AU", {
-            timeStyle: "short",
-          })}{" "}
+          {message.sentAt.toLocaleTimeString('en-AU', {
+            timeStyle: 'short'
+          })}{' '}
           - {message.sender.name}
         </time>
       </div>
@@ -44,26 +44,26 @@ function RoomPage() {
   const roomId = query.roomId as string;
   const { data: session } = useSession();
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
 
   const { mutateAsync: sendMessageMutation } = trpc.useMutation([
-    "room.send-message",
+    'room.send-message'
   ]);
 
   trpc.useSubscription(
     [
-      "room.onSendMessage",
+      'room.onSendMessage',
       {
-        roomId,
-      },
+        roomId
+      }
     ],
     {
       onNext: (message) => {
         setMessages((m) => {
           return [...m, message];
         });
-      },
+      }
     }
   );
 
@@ -78,8 +78,8 @@ function RoomPage() {
   return (
     <Layout footer header headerProps={{ offsetHeight: 256 }}>
       <Grid columns="medium" gapX={4} gapY={12} all>
-        <div className="flex-1">
-          <ul className="flex flex-col p-4">
+        <div>
+          <ul>
             {messages.map((m) => {
               return <MessageItem key={m.id} message={m} session={session} />;
             })}
@@ -87,29 +87,29 @@ function RoomPage() {
         </div>
 
         <form
-          className="flex"
           onSubmit={(e) => {
-            console.log("submity");
+            console.log('submity');
             e.preventDefault();
 
             sendMessageMutation({
               roomId,
-              message,
+              message
             });
 
-            setMessage("");
+            setMessage('');
           }}
         >
-          <textarea
-            className="black p-2.5 w-full text-gray-700 bg-gray-50 rounded-md border border-gray-700"
+          <TextArea
+            id="message"
+            aria-label="Message"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => setMessage(e.currentTarget.value)}
             placeholder="What do you want to say"
           />
 
-          <button className="flex-1 text-white bg-gray-900 p-2.5" type="submit">
+          <Button variant="primary" type="submit">
             Send message
-          </button>
+          </Button>
         </form>
       </Grid>
     </Layout>

@@ -1,4 +1,3 @@
-import { serialize } from "../serialize";
 import { RawTweetType, TransformedTweet, TweetData } from "../types";
 
 export const getTweets = async (ids: string[]) => {
@@ -6,7 +5,7 @@ export const getTweets = async (ids: string[]) => {
     return [];
   }
 
-  const queryParams = serialize({
+  const queryParams = new URLSearchParams({
     ids: ids.join(","),
     expansions:
       "author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id",
@@ -21,7 +20,7 @@ export const getTweets = async (ids: string[]) => {
     "https://api.twitter.com/2/tweets?" + queryParams,
     {
       headers: {
-        Authorization: "Bearer " + process.env.TWITTER_API_KEY,
+        Authorization: `Bearer ${process.env.TWITTER_API_KEY}`,
       },
     }
   );
@@ -50,7 +49,7 @@ export const getTweets = async (ids: string[]) => {
 
   return tweets.data.reduce(
     // @ts-ignore
-    (allTweets: Record<string, TransformedTweet>, tweet: TweetData) => {
+    (allTweets: Record<string, TransformedTweet>[], tweet: TweetData) => {
       const tweetWithAuthor = {
         ...tweet,
         media:
@@ -60,7 +59,6 @@ export const getTweets = async (ids: string[]) => {
         referenced_tweets: getReferencedTweets(tweet),
         author: getAuthorInfo(tweet.author_id),
       };
-      // @ts-ignore
       return [tweetWithAuthor, ...allTweets];
     },
     [] as unknown as Record<string, TransformedTweet>

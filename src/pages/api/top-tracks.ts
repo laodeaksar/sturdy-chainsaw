@@ -2,8 +2,8 @@ import {
   getTopTracks,
   validateTrack,
   type TopTrackData,
-} from "../../lib/spotify";
-import { buildApiResponse, unique } from "@laodeaksarr/design-system";
+} from "~/lib/spotify";
+import { buildApiResponse, unique } from "~/utils/api";
 
 export const config = {
   runtime: "experimental-edge",

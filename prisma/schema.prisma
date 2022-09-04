@@ -13,8 +13,7 @@ datasource db {
 
 // Necessary for Next auth
 model Account {
-  id     String @id @default(cuid())
-  userId String
+  id String @id @default(cuid())
 
   type              String
   provider          String
@@ -27,7 +26,8 @@ model Account {
   id_token          String?
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   @@unique([provider, providerAccountId])
 }
@@ -35,10 +35,10 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String
   expires      DateTime
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 }
 
 model User {
@@ -66,6 +66,7 @@ model Guestbook {
   email      String //@db.VarChar(256)
   body       String //@db.VarChar(500)
   created_by String //@db.VarChar(256)
+
   created_at DateTime @default(now()) //@db.DateTime(6)
   updated_at DateTime @updatedAt //@db.DateTime(6)
 }

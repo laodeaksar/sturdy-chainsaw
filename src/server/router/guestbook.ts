@@ -1,62 +1,72 @@
-import { createRouter } from "./context";
+import { createRouter } from './context';
 import {
   singleGuestbookSchema,
   guestbookSchema,
-  updateGuestbookSchema,
-} from "../../constants/schemas";
+  updateGuestbookSchema
+} from '../../constants/schemas';
 
 export const guestbookRouter = createRouter()
-  .mutation("add", {
+  .mutation('add', {
     input: guestbookSchema,
-    async resolve({ input,ctx }) {
+    async resolve({ input, ctx }) {
+      const user = ctx.session?.user;
+
       const guestbook = await ctx.prisma.guestbook.create({
         data: {
           ...input,
-          email: ctx.session?.user?.email || "unknown",
-          created_by: ctx.session?.user?.name || "unknown",
-        },
+          email: user?.email || 'unknown',
+          created_by: user?.name || 'unknown'
+        }
       });
+
       return guestbook;
-    },
+    }
   })
-  .query("all", {
+  .query('all', {
     resolve({ ctx }) {
       return ctx.prisma.guestbook.findMany({
         orderBy: {
-          created_at: "desc",
-        },
+          created_at: 'desc'
+        }
       });
-    },
+    }
   })
-  .query("byId", {
+  .query('byId', {
     input: singleGuestbookSchema,
     resolve({ input, ctx }) {
       return ctx.prisma.guestbook.findUnique({
         where: {
-          id: input.id,
-        },
+          id: input.id
+        }
       });
-    },
+    }
   })
-  .mutation("edit", {
+  .mutation('edit', {
     input: updateGuestbookSchema,
     async resolve({ input, ctx }) {
       const post = await ctx.prisma.guestbook.update({
-        where: { id: input.id },
-        data: {
-          ...input,
+        where: {
+          id: input.id
         },
+        data: {
+          ...input
+        }
       });
+
       return post;
-    },
+    }
   })
-  .mutation("delete", {
+  .mutation('delete', {
     input: singleGuestbookSchema,
     async resolve({ input, ctx }) {
       const { id } = input;
-      await ctx.prisma.guestbook.delete({ where: { id } });
+
+      await ctx.prisma.guestbook.delete({
+        where: { id }
+      });
+
       return {
-        id,
+        id
       };
-    },
+    }
   });
