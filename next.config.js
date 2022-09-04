@@ -1,4 +1,4 @@
-const { env } = require("./src/env/server.mjs");
+// const { env } = require("./src/env/server.mjs");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
