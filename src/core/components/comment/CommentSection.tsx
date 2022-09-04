@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { Box } from "@laodeaksarr/design-system";
 
-import formComment from "src/helpers/formatComment";
-import { trpc } from "src/utils/trpc";
+import formComment from "helpers/formatComment";
+import { trpc } from "~/utils/trpc";
 
 import ListComment from "./ListComments";
 import CommentForm from "./CommentForm";

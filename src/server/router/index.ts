@@ -10,12 +10,13 @@ if (!global.fetch) {
 import { roomRouter } from "./room";
 import { guestbookRouter } from "./guestbook";
 import { commentRouter } from "./comment";
-
+import { postRouter } from "./post";
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("room.", roomRouter)
   .merge("guestbook.", guestbookRouter)
+  .merge("posts.", postRouter)
   .merge("comments.", commentRouter);
 
 // export type definition of API

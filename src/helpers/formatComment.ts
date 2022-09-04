@@ -1,4 +1,4 @@
-import type { Comment, CommentWithChildren } from "~/utils/trpc";
+import { Comment, CommentWithChildren } from "~/utils/trpc";
 
 function formComments(comments: Comment[]) {
   const map = new Map();
@@ -12,14 +12,12 @@ function formComments(comments: Comment[]) {
 
     (comments[i] as CommentWithChildren).children = [];
 
-    if ((comments[i] as CommentWithChildren).parentId) {
+    if (typeof comments[i]?.parentId === "string") {
       const parentCommentIndex: number = map.get(comments[i]?.parentId);
 
-      {
-        (comments[parentCommentIndex] as CommentWithChildren).children.push(
-          comments[i] as CommentWithChildren
-        );
-      }
+      (comments[parentCommentIndex] as CommentWithChildren).children.push(
+        comments[i] as CommentWithChildren
+      );
 
       continue;
     }

@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
 import { customAlphabet } from "nanoid";
 import { useRouter } from "next/router";
 import { Suspense } from "react";
+import type { NextPage } from "next";
 
 import Layout from "~/theme/layout";
 import { Grid } from "@laodeaksarr/design-system";
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
     <Suspense fallback={null}>
       <Layout headerProps={{ offsetHeight: 256 }}>
         <Grid columns="medium" gapX={4} gapY={12} all>
-          <main className="container mx-auto flex flex-col items-center justify-center h-screen p-4">
+          <main>
             <button onClick={createRoom}>create chat room</button>
           </main>
         </Grid>

@@ -8,22 +8,20 @@ function CommentForm({ parentId }: { parentId?: string }) {
   const [body, setBody] = useState("");
   const router = useRouter();
 
-  const slug = router.query.slug as string;
+  const permalink = router.query.permalink as string;
 
   const utils = trpc.useContext();
 
   const { isLoading, mutate } = trpc.useMutation(["comments.add-comment"], {
     onSuccess: () => {
-      body: "";
-
-      utils.invalidateQueries(["comments.all-comments", { slug }]);
+      utils.invalidateQueries(["comments.all-comments", { permalink }]);
     },
   });
 
   function handleSubmit(values: { body: string }) {
     const payload = {
       ...values,
-      slug,
+      permalink,
       parentId,
     };
 

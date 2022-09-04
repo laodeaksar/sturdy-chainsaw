@@ -1,4 +1,4 @@
-import "~/styles/globals.css";
+import "~/styles/global.css";
 import "~/styles/font.css";
 
 import { withTRPC } from "@trpc/next";

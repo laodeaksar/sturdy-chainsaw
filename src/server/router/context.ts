@@ -23,6 +23,8 @@ export const createContext = async (
   const res = opts?.res;
 
   const session = req && res && (await getSession({ req }));
+//  const session = req && res && (await getServerSession(req, res, nextAuthOptions));
+
 
   return {
     req,
@@ -36,7 +38,3 @@ export const createContext = async (
 export type Context = trpc.inferAsyncReturnType<typeof createContext>;
 
 export const createRouter = () => trpc.router<Context>();
-
-export type inferQueryResponse<
-  TRouteKey extends keyof AppRouter["_def"]["queries"]
-> = trpc.inferProcedureOutput<AppRouter["_def"]["queries"][TRouteKey]>;
