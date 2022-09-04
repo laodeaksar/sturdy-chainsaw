@@ -1,9 +1,4 @@
 -- CreateTable
-CREATE TABLE "Example" (
-    "id" TEXT NOT NULL PRIMARY KEY
-);
-
--- CreateTable
 CREATE TABLE "Account" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userId" TEXT NOT NULL,
@@ -43,6 +38,16 @@ CREATE TABLE "VerificationToken" (
     "identifier" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "expires" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Guestbook" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "email" TEXT NOT NULL,
+    "body" TEXT NOT NULL,
+    "created_by" TEXT NOT NULL,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" DATETIME NOT NULL
 );
 
 -- CreateIndex

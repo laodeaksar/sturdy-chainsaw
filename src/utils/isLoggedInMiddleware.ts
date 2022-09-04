@@ -14,6 +14,7 @@ export const isLoggedInMiddleware: MiddlewareFunction<
   if (!ctx.session) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
+  
   return next({
     ctx: {
       ...ctx,

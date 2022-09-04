@@ -1,0 +1,75 @@
+import { Box, Button, Card, Text } from "@laodeaksarr/design-system";
+import { useState } from "react";
+import CommentForm from "./CommentForm";
+
+function getReplyCount(count: number) {
+  if (count === 0) {
+    return "No replies";
+  }
+
+  if (count === 1) {
+    return "1 reply";
+  }
+
+  return `${count} replies`;
+}
+
+function CommentActions({
+  commentId,
+  replyCount,
+}: {
+  commentId: string;
+  replyCount: number;
+}) {
+  const [replying, setReplying] = useState(false);
+
+  return (
+    <>
+      <Card>
+        <Text>{getReplyCount(replyCount)}</Text>
+        <Button variant="primary" onClick={() => setReplying(!replying)}>
+          Reply
+        </Button>
+      </Card>
+
+      {replying && <CommentForm parentId={commentId} />}
+    </>
+  );
+}
+
+function Comment({ comment }: any) {
+  return (
+    <Card>
+      <Box>
+        <Text>{comment.user.name}</Text>
+        <Text>{comment.publishedAt}</Text>
+        <Text>{comment.body}</Text>
+      </Box>
+
+      <CommentActions
+        commentId={comment.id}
+        replyCount={comment.children.length}
+      />
+
+      {comment.children && comment.children.length > 0 && (
+        <ListComment comments={comment.children} />
+      )}
+    </Card>
+  );
+}
+
+function ListComment({
+  comments,
+}: {
+  comments: any[] /*CommentWithChildren[]*/;
+}) {
+  return (
+    <Box>
+      {comments?.map((comment) => {
+        return <Comment key={comment.id} comment={comment} />;
+      })}
+    </Box>
+  );
+}
+
+export default ListComment;

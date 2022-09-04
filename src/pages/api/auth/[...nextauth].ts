@@ -1,4 +1,4 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import NextAuth  from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -7,7 +7,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../../../server/db/client";
 import { env } from "../../../server/env";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   // Include user.id on session
   // callbacks: {
   //   session({ session, user }) {
@@ -36,8 +36,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     GitHubProvider({
-      clientId: process.env.OAUTH_CLIENT_KEY,
-      clientSecret: process.env.OAUTH_CLIENT_SECRET,
+      clientId: process.env.OAUTH_CLIENT_KEY as string,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET as string,
     }),
   ],
   secret: env.NEXTAUTH_SECRET,

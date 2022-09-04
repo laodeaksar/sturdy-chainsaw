@@ -9,11 +9,14 @@ if (!global.fetch) {
 
 import { roomRouter } from "./room";
 import { guestbookRouter } from "./guestbook";
+import { commentRouter } from "./comment";
+
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("room.", roomRouter)
-  .merge("guestbook.", guestbookRouter);
+  .merge("guestbook.", guestbookRouter)
+  .merge("comments.", commentRouter);
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
