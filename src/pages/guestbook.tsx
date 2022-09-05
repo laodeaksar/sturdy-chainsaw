@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 
 import { Grid, H2, Text } from '@laodeaksarr/design-system';
 
-import GuestbookComponent from '~/theme/components/Guestbook';
+import GuestbookComponent from '~/theme/components/guestbook';
 
 import Layout from '~/theme/layout';
 

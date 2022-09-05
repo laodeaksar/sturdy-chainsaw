@@ -2,12 +2,8 @@
   "compilerOptions": {
     "baseUrl": "src/",
     "paths": {
-      "~/theme/*": [
-        "core/*"
-      ],
-      "~/*": [
-        "*"
-      ]
+      "~/theme/*": ["core/*"],
+      "~/*": ["*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -32,6 +28,7 @@
     "**/*.tsx",
     "**/*.mjs",
     "**/*.js",
-    "**/*.cjs",  ],
+    "**/*.cjs"
+  ],
   "exclude": ["node_modules"]
 }

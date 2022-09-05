@@ -43,7 +43,7 @@ export default class Document extends NextDocument {
                   if (!mode) return
                   document.body.classList.add('laodeaksar-' + mode)
                 } catch (e) {}
-              })()`
+              })()`,
             }}
           />
           <Main />
