@@ -5,22 +5,9 @@
       "~/theme/*": [
         "core/*"
       ],
-      "~/layouts/*": [
-        "layouts/*"
-      ],
-      "~/lib/*": [
-        "lib/*"
-      ],
-      "~/styles/*": [
-        "styles/*"
-      ],
-      "~/types/*": [
-        "types/*"
-      ],
-      "~/utils/*": [
-        "utils/*"
+      "~/*": [
+        "*"
       ]
-
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -43,7 +30,8 @@
     "next-auth.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.js"
-  ],
+    "**/*.mjs",
+    "**/*.js",
+    "**/*.cjs",  ],
   "exclude": ["node_modules"]
 }

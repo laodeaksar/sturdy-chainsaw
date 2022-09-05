@@ -1,5 +1,5 @@
 import { getNowPlaying, validateTrack, type TrackData } from "~/lib/spotify";
-import { buildApiResponse } from "~/utils/api";
+import { buildApiResponse } from "~/styles/api";
 
 export const config = {
   runtime: "experimental-edge",
