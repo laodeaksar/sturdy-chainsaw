@@ -6,6 +6,7 @@ const useScrollCounter = (offset: number) => {
   React.useEffect(() => {
     const showTitle = () => setReached(window.scrollY > offset);
     window.addEventListener("scroll", showTitle);
+    
     return () => {
       window.removeEventListener("scroll", showTitle);
     };

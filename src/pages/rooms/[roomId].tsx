@@ -5,31 +5,23 @@ import { useState } from 'react';
 
 import { Button, Grid, TextArea } from '@laodeaksarr/design-system';
 
-import { Message } from '../../constants/schemas';
-import Layout from '../../core/layout';
-import { trpc } from '../../utils/trpc';
+import { Message } from '~/constants/schemas';
+import Layout from '~/theme/layout';
+import { trpc } from '~/utils/trpc';
 
 function MessageItem({
   message,
-  session
+  session,
 }: {
   message: Message;
   session: Session;
 }) {
-  const baseStyles =
-    'mb-4 text-md w-7/12 p-4 text-gray-700 border border-gray-700 rounded-md';
-
-  const liStyles =
-    message.sender.name === session.user?.name
-      ? baseStyles
-      : baseStyles.concat(' self-end bg-gray-700 text-white');
-
   return (
-    <li className={liStyles}>
-      <div className="flex">
-        <time>
+    <li>
+      <div>
+        <time dateTime={message.sentAt.toISOString()}>
           {message.sentAt.toLocaleTimeString('en-AU', {
-            timeStyle: 'short'
+            timeStyle: 'short',
           })}{' '}
           - {message.sender.name}
         </time>
@@ -48,24 +40,16 @@ function RoomPage() {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const { mutateAsync: sendMessageMutation } = trpc.useMutation([
-    'room.send-message'
+    'room.send-message',
   ]);
 
-  trpc.useSubscription(
-    [
-      'room.onSendMessage',
-      {
-        roomId
-      }
-    ],
-    {
-      onNext: (message) => {
-        setMessages((m) => {
-          return [...m, message];
-        });
-      }
-    }
-  );
+  trpc.useSubscription(['room.onSendMessage', { roomId }], {
+    onNext: (message) => {
+      setMessages((m) => {
+        return [...m, message];
+      });
+    },
+  });
 
   if (!session) {
     return (
@@ -88,12 +72,11 @@ function RoomPage() {
 
         <form
           onSubmit={(e) => {
-            console.log('submity');
             e.preventDefault();
 
             sendMessageMutation({
               roomId,
-              message
+              message,
             });
 
             setMessage('');

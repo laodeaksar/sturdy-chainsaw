@@ -1,12 +1,12 @@
-import { styled } from "@laodeaksarr/design-system";
+import { styled } from '@laodeaksarr/design-system';
 
 interface LogoProp {
   alt?: string;
   size?: number;
 }
-const Svg = styled("svg", {
-  transition: "0.5s",
-  willChange: "stroke, fill",
+const Svg = styled('svg', {
+  transition: '0.5s',
+  willChange: 'stroke, fill',
 });
 
 const Logo = ({ alt, size }: LogoProp) => (

@@ -1,42 +1,57 @@
 import React from 'react';
+import { useForm } from '@mantine/form';
 
 import { Button, Flex, Text, TextInput } from '@laodeaksarr/design-system';
-import { Guestbook } from 'constants/schemas';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
 import { trpc } from '~/utils/trpc';
+import { showNotification, updateNotification } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons';
 
 function GuestbookForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting }
-  } = useForm<Guestbook>();
-  const { mutate, error, isLoading } = trpc.useMutation(['guestbook.add'], {
-    async onSuccess() {
-      toast.success('Thank you for your comment!');
+  const form = useForm({
+    initialValues: {
+      body: '',
     },
-    async onError() {
-      toast.error('Something went wrong. Please try again later.');
-    },
-    async onMutate() {
-      toast.loading('Posting your comment...');
-    }
   });
 
-  const onSubmit: SubmitHandler<Guestbook> = async (data) => {
-    mutate(data);
+  const utils = trpc.useContext();
+
+  const { mutate, isLoading } = trpc.useMutation(['guestbook.add'], {
+    onSuccess: () => {
+      form.reset();
+      updateNotification({
+        id: 'creating-message',
+        color: 'teal',
+        title: 'Message created',
+        message: 'Message created successfully',
+        icon: <IconCheck />,
+        autoClose: 2000,
+      });
+      utils.invalidateQueries(['guestbook.all']);
+    },
+  });
+
+  const handleSubmit = async (data: any) => {
+    showNotification({
+      id: 'creating-message',
+      loading: true,
+      title: 'Creating messanges',
+      message: 'You will be redirected when your message has been created',
+      autoClose: false,
+      disallowClose: true,
+    });
+    
+    return mutate(data);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Flex
           alignItems="flex-start"
           gap={3}
           direction={{
             '@initial': 'row',
-            '@media (max-width: 500px)': 'column'
+            '@media (max-width: 500px)': 'column',
           }}
         >
           <TextInput
@@ -44,8 +59,7 @@ function GuestbookForm() {
             disabled={isLoading}
             placeholder="Your message..."
             id="input-message"
-            // onChange={() => {}}
-            {...register('body')}
+            {...form.getInputProps('body')}
           />
           <Button
             aria-label="Send message"
@@ -59,23 +73,16 @@ function GuestbookForm() {
           </Button>
         </Flex>
       </form>
-      {errors ? (
-        <Message isError>{errors.body?.message}</Message>
-      ) : (
-        /*) : form.state === Form.Success ? (
-        <Message>{form?.message as string}</Message>*/
-        <Text
-          as="p"
-          size={1}
-          css={{
-            marginTop: '$2',
-            marginBottom: 0
-          }}
-        >
-          Your information is only used to display your name and reply by email.
-        </Text>
-      )}
-      <Toaster />
+      <Text
+        as="p"
+        size={1}
+        css={{
+          marginTop: '$2',
+          marginBottom: 0,
+        }}
+      >
+        Your information is only used to display your name and reply by email.
+      </Text>
     </>
   );
 }
@@ -84,14 +91,14 @@ export default GuestbookForm;
 
 export const Message = ({
   children,
-  isError
+  isError,
 }: React.PropsWithChildren<{ isError?: boolean }>) => (
   <Text
     as="p"
     size={2}
     css={{
       marginTop: '$2',
-      marginBottom: 0
+      marginBottom: 0,
     }}
     variant={isError ? 'danger' : 'success'}
   >

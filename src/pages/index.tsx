@@ -1,12 +1,13 @@
-import { customAlphabet } from "nanoid";
-import { useRouter } from "next/router";
-import { Suspense } from "react";
-import type { NextPage } from "next";
+import { Suspense } from 'react';
+import { customAlphabet } from 'nanoid';
+import { useRouter } from 'next/router';
+import type { NextPage } from 'next';
 
-import Layout from "~/theme/layout";
-import { Grid } from "@laodeaksarr/design-system";
+import Layout from '~/theme/layout';
+import { Grid } from '@laodeaksarr/design-system';
+import { Button } from '@mantine/core';
 
-const nanoid = customAlphabet("abcdefghijklmnopqrstuvqxyz0123456789", 4);
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvqxyz0123456789', 4);
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
       <Layout headerProps={{ offsetHeight: 256 }}>
         <Grid columns="medium" gapX={4} gapY={12} all>
           <main>
-            <button onClick={createRoom}>create chat room</button>
+            <Button onClick={createRoom}>create chat room</Button>
           </main>
         </Grid>
       </Layout>

@@ -1,18 +1,18 @@
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 import {
   Flex,
   Grid,
   Tooltip,
   useKeyboardShortcut,
-} from "@laodeaksarr/design-system";
+} from '@laodeaksarr/design-system';
 
-import Logo from "../Logo";
-import useProgress from "../../hooks/useProgress";
-import useScrollCounter from "../../hooks/useScroolCounter";
+import Logo from '../Logo';
+import useProgress from '../../hooks/useProgress';
+import useScrollCounter from '../../hooks/useScroolCounter';
 
 import {
   fixTruncate,
@@ -20,24 +20,24 @@ import {
   HeaderPadding,
   HeaderProgressBar,
   HeaderWrapper,
-} from "./Styles";
-import { HeaderTitle } from "./Title";
-import type { HeaderProps } from "./types";
+} from './Styles';
+import { HeaderTitle } from './Title';
+import type { HeaderProps } from './types';
 
 const CommandCenterButton = dynamic(
-  () => import("../Buttons/CommandCenterButton")
+  () => import('../Buttons/CommandCenterButton')
 );
-const LightDarkSwitcher = dynamic(() => import("../Buttons/LightDarkSwitcher"));
-const Search = dynamic(() => import("../Search"));
+const LightDarkSwitcher = dynamic(() => import('../Buttons/LightDarkSwitcher'));
+const Search = dynamic(() => import('../Search'));
 
 const headerVariants = {
   open: {
     height: 120,
-    transition: { ease: "easeInOut", duration: 0.3 },
+    transition: { ease: 'easeInOut', duration: 0.3 },
   },
   collapsed: {
     height: 60,
-    transition: { ease: "easeInOut", duration: 0.3, delayChildren: 0.5 },
+    transition: { ease: 'easeInOut', duration: 0.3, delayChildren: 0.5 },
   },
 };
 
@@ -47,7 +47,7 @@ const Header = (props: HeaderProps) => {
   const reached = useScrollCounter(offsetHeight / 2);
   const readingProgress = useProgress();
 
-  useKeyboardShortcut("Escape", () => setShowSearch(false));
+  useKeyboardShortcut('Escape', () => setShowSearch(false));
   // useKeyboardShortcut('ctrl+k|meta+k', () => setShowSearch(true));
 
   return (
@@ -67,12 +67,12 @@ const Header = (props: HeaderProps) => {
       </AnimatePresence>
       <HeaderWrapper
         initial="open"
-        animate={reached ? "collapsed" : "open"}
+        animate={reached ? 'collapsed' : 'open'}
         variants={headerVariants}
         css={{
           borderColor: reached
-            ? "var(--laodeaksar-border-color)"
-            : "transparent",
+            ? 'var(--laodeaksar-border-color)'
+            : 'transparent',
         }}
       >
         <Grid columns="medium" gapX={4}>

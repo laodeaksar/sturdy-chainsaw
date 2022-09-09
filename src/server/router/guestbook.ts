@@ -3,7 +3,7 @@ import {
   singleGuestbookSchema,
   guestbookSchema,
   updateGuestbookSchema
-} from '../../constants/schemas';
+} from '~/constants/schemas';
 
 export const guestbookRouter = createRouter()
   .mutation('add', {

@@ -4,16 +4,11 @@ import type { NextPage } from 'next';
 import { Grid, H2, Text } from '@laodeaksarr/design-system';
 
 import GuestbookComponent from '~/theme/components/guestbook';
-
 import Layout from '~/theme/layout';
 
 const Guestbook: NextPage = () => {
   return (
-    <Layout
-      footer
-      header
-      headerProps={{ offsetHeight: 256 }}
-    >
+    <Layout footer header headerProps={{ offsetHeight: 256 }}>
       <Grid columns="medium" gapX={4} gapY={12} all>
         <div>
           <H2>Guestbook</H2>

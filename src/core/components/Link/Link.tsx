@@ -1,8 +1,8 @@
-import React from "react";
-import NextLink from "next/link";
+import React from 'react';
+import NextLink from 'next/link';
 
-import { Anchor,  type AnchorProps } from "@laodeaksarr/design-system";
-import trackEvent from "~/lib/tracking";
+import { Anchor, type AnchorProps } from '@laodeaksarr/design-system';
+import trackEvent from '~/lib/tracking';
 
 type Props = {
   href: any;
@@ -17,10 +17,10 @@ const Link = ({
 }: React.PropsWithChildren<Props>) => {
   function handleOutboundLinkClicked() {
     trackEvent({
-      event: "click",
-      name: "Outbound Link",
+      event: 'click',
+      name: 'Outbound Link',
       value: href,
-      type: "url",
+      type: 'url',
     });
     handleTracking();
   }

@@ -1,31 +1,31 @@
-import React from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import React from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 
-import { styled } from "@laodeaksarr/design-system";
+import { styled } from '@laodeaksarr/design-system';
 
-const CopyButton = styled("button", {
-  background: "transparent",
-  border: "none",
+const CopyButton = styled('button', {
+  background: 'transparent',
+  border: 'none',
 
   svg: {
-    marginTop: "4px",
+    marginTop: '4px',
   },
 
-  "&:focus:not(:focus-visible)": {
-    outline: "0",
+  '&:focus:not(:focus-visible)': {
+    outline: '0',
   },
 
-  "&:focus-visible": {
-    outline: "2px solid var(--laodeaksar-colors-brand)",
+  '&:focus-visible': {
+    outline: '2px solid var(--laodeaksar-colors-brand)',
   },
 
   variants: {
     checked: {
       true: {
-        cursor: "default",
+        cursor: 'default',
       },
       false: {
-        cursor: "pointer",
+        cursor: 'pointer',
       },
     },
   },
@@ -110,7 +110,7 @@ const CopyToClipboardButton = (props: { text: string; title?: string }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={false}
-          animate={isChecked ? "checked" : "unchecked"}
+          animate={isChecked ? 'checked' : 'unchecked'}
           variants={boxVariants}
           custom={isChecked}
           transition={{ duration }}
@@ -120,7 +120,7 @@ const CopyToClipboardButton = (props: { text: string; title?: string }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={false}
-          animate={isChecked ? "checked" : "unchecked"}
+          animate={isChecked ? 'checked' : 'unchecked'}
           variants={boxVariants}
           custom={isChecked}
           transition={{ duration }}
@@ -130,7 +130,7 @@ const CopyToClipboardButton = (props: { text: string; title?: string }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={false}
-          animate={isChecked ? "checked" : "unchecked"}
+          animate={isChecked ? 'checked' : 'unchecked'}
           variants={tickVariants}
           style={{ pathLength, opacity }}
           custom={isChecked}

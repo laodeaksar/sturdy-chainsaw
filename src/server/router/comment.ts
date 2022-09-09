@@ -1,10 +1,10 @@
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
+import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
 
-import { createRouter } from "./context";
+import { createRouter } from './context';
 
 export const commentRouter = createRouter()
-  .query("all-comments", {
+  .query('all-comments', {
     input: z.object({
       permalink: z.string(),
     }),
@@ -27,20 +27,20 @@ export const commentRouter = createRouter()
       } catch (e) {
         console.log(e);
 
-        throw new TRPCError({ code: "BAD_REQUEST" });
+        throw new TRPCError({ code: 'BAD_REQUEST' });
       }
     },
   })
   .middleware(async ({ ctx, next }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({
-        code: "UNAUTHORIZED",
+        code: 'UNAUTHORIZED',
       });
     }
 
     return next();
   })
-  .mutation("add-comment", {
+  .mutation('add-comment', {
     input: z.object({
       body: z.string(),
       permalink: z.string(),
@@ -80,7 +80,9 @@ export const commentRouter = createRouter()
       } catch (e) {
         console.log(e);
 
-        throw new TRPCError({ code: "BAD_REQUEST" });
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+        });
       }
     },
   });

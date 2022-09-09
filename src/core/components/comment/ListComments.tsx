@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { Box, Button, Card, Text } from "@laodeaksarr/design-system";
+import { useState } from 'react';
+import { Box, Button, Card, Text } from '@laodeaksarr/design-system';
 
-import { CommentWithChildren } from "~/utils/trpc";
-import CommentForm from "./CommentForm";
+import { CommentWithChildren } from '~/utils/trpc';
+import CommentForm from './CommentForm';
 
 function getReplyCount(count: number) {
   if (count === 0) {
-    return "No replies";
+    return 'No replies';
   }
 
   if (count === 1) {
-    return "1 reply";
+    return '1 reply';
   }
 
   return `${count} replies`;

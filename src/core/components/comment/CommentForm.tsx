@@ -1,16 +1,16 @@
 import { useRouter } from 'next/router';
+import { useForm } from '@mantine/form';
 import { Box, Button, TextArea } from '@laodeaksarr/design-system';
 
 import { trpc } from '~/utils/trpc';
-import { useForm } from 'react-hook-form';
 
 function CommentForm({ parentId }: { parentId?: string }) {
   const router = useRouter();
 
   const form = useForm({
-    defaultValues: {
-      body: ''
-    }
+    initialValues: {
+      body: '',
+    },
   });
 
   const permalink = router.query.permalink as string;
@@ -19,15 +19,17 @@ function CommentForm({ parentId }: { parentId?: string }) {
 
   const { isLoading, mutate } = trpc.useMutation(['comments.add-comment'], {
     onSuccess: () => {
+      form.reset();
+
       utils.invalidateQueries(['comments.all-comments', { permalink }]);
-    }
+    },
   });
 
   function handleSubmit(values: { body: string }) {
     const payload = {
       ...values,
       permalink,
-      parentId
+      parentId,
     };
 
     return mutate(payload);
@@ -35,14 +37,14 @@ function CommentForm({ parentId }: { parentId?: string }) {
 
   return (
     <Box>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextArea
           required
           id="comment"
           disabled={isLoading}
           placeholder="Comment"
           aria-label="comment"
-          {...form.register('body')}
+          {...form.getInputProps('body')}
         />
         <Button variant="primary" type="submit">
           {parentId ? 'Post reply' : 'Post Comment'}

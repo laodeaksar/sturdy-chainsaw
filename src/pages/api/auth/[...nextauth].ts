@@ -1,11 +1,11 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import GitHubProvider from "next-auth/providers/github";
+import NextAuth, { type NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GitHubProvider from 'next-auth/providers/github';
 
 // Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from "~/server/db/client";
-import { env } from "~/env/server.mjs";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { prisma } from '~/server/db/client';
+import { env } from '~/env/server.mjs';
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -15,23 +15,23 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.sub as string;
       }
       return session;
-    },
+    }
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
+      name: 'Credentials',
       // The credentials is used to generate a suitable form on the sign in page.
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { 
-          label: "Username", 
-          type: "text", 
-          placeholder: "tom" 
+        username: {
+          label: 'Username',
+          type: 'text',
+          placeholder: 'tom',
         },
       },
       async authorize(credentials, req) {
@@ -62,9 +62,9 @@ export const authOptions: NextAuthOptions = {
           await prisma.account.create({
             data: {
               userId: newUser.id,
-              provider: "credentials",
-              providerAccountId: "credentials",
-              type: "credentials",
+              provider: 'credentials',
+              providerAccountId: 'credentials',
+              type: 'credentials',
             },
           });
 
@@ -80,9 +80,12 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.OAUTH_CLIENT_SECRET as string,
     }),
   ],
+  pages:{
+    signIn: '/login',
+  },
   secret: env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
 };
 

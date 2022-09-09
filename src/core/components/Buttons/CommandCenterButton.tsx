@@ -1,6 +1,6 @@
-import { motion, MotionProps, useMotionValue } from "framer-motion";
+import { motion, MotionProps, useMotionValue } from 'framer-motion';
 
-import { Button, Tooltip } from "@laodeaksarr/design-system";
+import { Button, Tooltip } from '@laodeaksarr/design-system';
 
 interface Props {
   onClick: () => void;
@@ -26,7 +26,7 @@ const CommandCenterButton = (props: Props) => {
         aria-describedby="commandCenterTooltip"
         onClick={onClick}
         initial={false}
-        animate={isSearchShown ? "checked" : "unchecked"}
+        animate={isSearchShown ? 'checked' : 'unchecked'}
         whileHover="hover"
         whileTap="pressed"
         transition={{ duration }}

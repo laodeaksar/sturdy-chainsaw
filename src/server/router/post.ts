@@ -1,19 +1,20 @@
-import { createRouter } from "./context";
-import { z } from "zod";
-import crypto from "crypto";
-import sanitizeHtml from "sanitize-html";
-import { TRPCError } from "@trpc/server";
+import crypto from 'crypto';
+import sanitizeHtml from 'sanitize-html';
+import { z } from 'zod';
+import { TRPCError } from '@trpc/server';
+
+import { createRouter } from './context';
 
 const getPermaLink = (title: string) =>
   title
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
 export const postRouter = createRouter()
-  .query("get-all", {
+  .query('get-all', {
     async resolve({ ctx }) {
       return ctx.prisma.post.findMany({
         select: {
@@ -24,7 +25,7 @@ export const postRouter = createRouter()
       });
     },
   })
-  .query("find-by-permalink", {
+  .query('find-by-permalink', {
     input: z.object({
       permalink: z.string(),
     }),
@@ -49,7 +50,7 @@ export const postRouter = createRouter()
 
       if (!post) {
         throw new TRPCError({
-          code: "NOT_FOUND",
+          code: 'NOT_FOUND',
         });
       }
 
@@ -58,11 +59,14 @@ export const postRouter = createRouter()
   })
   .middleware(async ({ ctx, next }) => {
     if (!ctx.session?.user) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+      });
     }
+
     return next();
   })
-  .mutation("create-post", {
+  .mutation('create-post', {
     input: z.object({
       title: z.string(),
       body: z.string(),
@@ -72,7 +76,7 @@ export const postRouter = createRouter()
 
       const permalink = `${getPermaLink(title)}-${crypto
         .randomBytes(2)
-        .toString("hex")}`;
+        .toString('hex')}`;
 
       const user = ctx.session?.user;
 
@@ -80,11 +84,11 @@ export const postRouter = createRouter()
         data: {
           title,
           body: sanitizeHtml(body, {
-            allowedTags: ["b", "i", "em", "strong", "a"],
+            allowedTags: ['b', 'i', 'em', 'strong', 'a'],
             allowedAttributes: {
-              a: ["href"],
+              a: ['href'],
             },
-            allowedIframeHostnames: ["www.youtube.com"],
+            allowedIframeHostnames: ['www.youtube.com'],
           }),
           permalink,
           user: {

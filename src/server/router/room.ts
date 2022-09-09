@@ -6,8 +6,8 @@ import {
   Message,
   messageSubSchema,
   sendMessageSchema,
-} from "constants/schemas";
-import { Events } from "constants/events";
+} from "~/constants/schemas";
+import { Events } from "~/constants/events";
 
 export const roomRouter = createRouter()
   .mutation("send-message", {

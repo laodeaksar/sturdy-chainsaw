@@ -1,8 +1,8 @@
-import { getNowPlaying, validateTrack, type TrackData } from "~/lib/spotify";
-import { buildApiResponse } from "~/styles/api";
+import { getNowPlaying, validateTrack, type TrackData } from '~/lib/spotify';
+import { buildApiResponse } from '~/lib/api';
 
 export const config = {
-  runtime: "experimental-edge",
+  runtime: 'experimental-edge',
 };
 
 export default async function handler() {
@@ -19,7 +19,7 @@ export default async function handler() {
 
   const isPlaying = song.is_playing;
   const title = song.item.name;
-  const artist = song.item.artists.map(({ name }: any) => name).join(", ");
+  const artist = song.item.artists.map(({ name }: any) => name).join(', ');
   const album = song.item.album.name;
   const preAlbumImage = song.item.album.images.pop();
   const albumImage = song.item.album.images.pop() || preAlbumImage;
@@ -36,7 +36,7 @@ export default async function handler() {
 
   if (validateTrack(track)) {
     return buildApiResponse(200, track, {
-      "cache-control": "public, s-maxage=60, stale-while-revalidate=30",
+      'cache-control': 'public, s-maxage=60, stale-while-revalidate=30',
     });
   }
   return buildApiResponse(200, { isPlaying: false });

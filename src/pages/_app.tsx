@@ -1,6 +1,3 @@
-import '~/styles/global.css';
-import '~/styles/font.css';
-
 import { withTRPC } from '@trpc/next';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import superjson from 'superjson';
@@ -8,28 +5,30 @@ import superjson from 'superjson';
 import { SessionProvider } from 'next-auth/react';
 import { createWSClient, wsLink } from '@trpc/client/links/wsLink';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
-import {
-  globalStyles,
-  ThemeProvider,
-  Tooltip,
-} from '@laodeaksarr/design-system';
 
 import { AppRouter } from '~/server/router';
+import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  globalStyles();
-
   return (
-    <ThemeProvider>
-      <SessionProvider session={session}>
-        <Tooltip.Provider>
+    <SessionProvider session={session}>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          /** Put your mantine theme override here */
+          colorScheme: 'light',
+        }}
+      >
+        <NotificationsProvider>
           <Component {...pageProps} />
-        </Tooltip.Provider>
-      </SessionProvider>
-    </ThemeProvider>
+        </NotificationsProvider>
+      </MantineProvider>
+    </SessionProvider>
   );
 };
 
@@ -91,4 +90,17 @@ export default withTRPC<AppRouter>({
    * @link https://trpc.io/docs/ssr
    */
   ssr: true,
+  responseMeta({ clientErrors, ctx }) {
+    if (clientErrors.length) {
+      // propagate first http error from API calls
+      return {
+        status: clientErrors[0]?.data?.httpStatus ?? 500,
+      };
+    }
+    // cache full page for 1 day + revalidate once every second
+    const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
+    return {
+      'Cache-Control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
+    };
+  },
 })(MyApp);

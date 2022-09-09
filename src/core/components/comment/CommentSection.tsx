@@ -1,18 +1,18 @@
-import { useRouter } from "next/router";
-import { Box } from "@laodeaksarr/design-system";
+import { useRouter } from 'next/router';
+import { Box } from '@laodeaksarr/design-system';
 
-import formComment from "helpers/formatComment";
-import { trpc } from "~/utils/trpc";
+import formComment from 'helpers/formatComment';
+import { trpc } from '~/utils/trpc';
 
-import ListComment from "./ListComments";
-import CommentForm from "./CommentForm";
+import ListComment from './ListComments';
+import CommentForm from './CommentForm';
 
 function CommentSection() {
   const router = useRouter();
 
-  const slug = router.query.slug as string;
+  const permalink = router.query.slug as string;
 
-  const { data } = trpc.useQuery(["comments.all-comments", { slug }]);
+  const { data } = trpc.useQuery(['comments.all-comments', { permalink }]);
 
   return (
     <Box>
