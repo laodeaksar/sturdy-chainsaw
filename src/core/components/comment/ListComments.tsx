@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, Button, Card, Text } from '@laodeaksarr/design-system';
 
 import { CommentWithChildren } from '~/utils/trpc';
+
 import CommentForm from './CommentForm';
 
 function getReplyCount(count: number) {
@@ -63,9 +64,9 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
 function ListComment({ comments }: { comments: CommentWithChildren[] }) {
   return (
     <Box>
-      {comments?.map((comment) => {
-        return <Comment key={comment.id} comment={comment} />;
-      })}
+      {comments?.map((comment) => (
+        <Comment key={comment.id} comment={comment} />
+      ))}
     </Box>
   );
 }

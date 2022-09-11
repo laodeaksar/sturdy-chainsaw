@@ -1,3 +1,15 @@
+export enum Form {
+  Initial,
+  Loading,
+  Success,
+  Error,
+}
+
+export interface FormState {
+  state: Form;
+  message?: string;
+}
+
 type TweetMedia = {
   media_key: string;
   type: string;
@@ -49,12 +61,12 @@ export interface TransformedTweet extends TweetData {
     | number
     | boolean
     | {}
-    | import("react").ReactElement<
+    | import('react').ReactElement<
         any,
-        string | import("react").JSXElementConstructor<any>
+        string | import('react').JSXElementConstructor<any>
       >
-    | import("react").ReactNodeArray
-    | import("react").ReactPortal
+    | import('react').ReactNodeArray
+    | import('react').ReactPortal
     | null
     | undefined;
   author: {

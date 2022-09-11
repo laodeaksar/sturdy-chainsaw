@@ -30,6 +30,6 @@ const styles = {
   })(),
   imgBlur: css({
     willChange: 'transform',
-    transform: 'scale(1.05)'
+    scale: '1.05',
   })()
 };

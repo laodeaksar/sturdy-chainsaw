@@ -1,10 +1,8 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
-
 import { Button, Flex, Text, TextInput } from '@laodeaksarr/design-system';
+
 import { trpc } from '~/utils/trpc';
-import { showNotification, updateNotification } from '@mantine/notifications';
-import { IconCheck } from '@tabler/icons';
 
 function GuestbookForm() {
   const form = useForm({
@@ -18,28 +16,11 @@ function GuestbookForm() {
   const { mutate, isLoading } = trpc.useMutation(['guestbook.add'], {
     onSuccess: () => {
       form.reset();
-      updateNotification({
-        id: 'creating-message',
-        color: 'teal',
-        title: 'Message created',
-        message: 'Message created successfully',
-        icon: <IconCheck />,
-        autoClose: 2000,
-      });
       utils.invalidateQueries(['guestbook.all']);
     },
   });
 
   const handleSubmit = async (data: any) => {
-    showNotification({
-      id: 'creating-message',
-      loading: true,
-      title: 'Creating messanges',
-      message: 'You will be redirected when your message has been created',
-      autoClose: false,
-      disallowClose: true,
-    });
-    
     return mutate(data);
   };
 
@@ -63,13 +44,12 @@ function GuestbookForm() {
           />
           <Button
             aria-label="Send message"
-            disabled={isLoading}
             isLoading={isLoading}
             title="Send message"
             type="submit"
             variant="primary"
           >
-            {!isLoading && 'Send'}
+            Send
           </Button>
         </Flex>
       </form>

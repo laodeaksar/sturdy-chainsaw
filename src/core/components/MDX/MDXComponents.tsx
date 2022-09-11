@@ -1,7 +1,7 @@
 import {
-  //Anchor,
-  //Blockquote,
-  //Button,
+  Anchor,
+  Blockquote,
+  Button,
   Callout,
   InlineCode,
   List,
@@ -13,9 +13,9 @@ import {
   Strong,
   Tabs,
 } from '@laodeaksarr/design-system';
-import { Anchor, Button, Blockquote } from '@mantine/core';
+
 import Code from '~/theme/components/Code';
-// import VideoPlayer from '~/components/VideoPlayer';
+// import VideoPlayer from '~/theme/components/VideoPlayer';
 
 // MDX only components Image,
 import Image from './Image';

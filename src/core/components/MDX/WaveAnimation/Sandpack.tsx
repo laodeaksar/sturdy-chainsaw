@@ -1,5 +1,6 @@
 import { useTheme } from '@laodeaksarr/design-system';
-import Sandpack from '~/components/Code/Sandpack';
+
+import Sandpack from '~/theme/components/Code/Sandpack';
 
 const SceneCSSDark = `
 html {

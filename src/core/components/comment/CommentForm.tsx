@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { useForm } from '@mantine/form';
 import { Box, Button, TextArea } from '@laodeaksarr/design-system';
+import { useForm } from '@mantine/form';
 
 import { trpc } from '~/utils/trpc';
 
@@ -21,7 +21,12 @@ function CommentForm({ parentId }: { parentId?: string }) {
     onSuccess: () => {
       form.reset();
 
-      utils.invalidateQueries(['comments.all-comments', { permalink }]);
+      utils.invalidateQueries([
+        'comments.all-comments',
+        {
+          permalink,
+        },
+      ]);
     },
   });
 
@@ -46,7 +51,7 @@ function CommentForm({ parentId }: { parentId?: string }) {
           aria-label="comment"
           {...form.getInputProps('body')}
         />
-        <Button variant="primary" type="submit">
+        <Button isLoading={isLoading} variant="primary" type="submit">
           {parentId ? 'Post reply' : 'Post Comment'}
         </Button>
       </form>

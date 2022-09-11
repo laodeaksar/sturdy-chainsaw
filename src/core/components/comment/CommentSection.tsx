@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { Box } from '@laodeaksarr/design-system';
 
-import formComment from 'helpers/formatComment';
+import formComments from '~/helpers/formatComment';
 import { trpc } from '~/utils/trpc';
 
 import ListComment from './ListComments';
@@ -12,12 +12,17 @@ function CommentSection() {
 
   const permalink = router.query.slug as string;
 
-  const { data } = trpc.useQuery(['comments.all-comments', { permalink }]);
+  const { data } = trpc.useQuery([
+    'comments.all-comments',
+    {
+      permalink,
+    },
+  ]);
 
   return (
     <Box>
       <CommentForm />
-      {data && <ListComment comments={formComment(data || [])} />}
+      {data && <ListComment comments={formComments(data || [])} />}
     </Box>
   );
 }

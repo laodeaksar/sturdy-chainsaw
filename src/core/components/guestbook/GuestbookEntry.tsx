@@ -1,7 +1,7 @@
 import { Box, Flex, Grid, Button, Text } from '@laodeaksarr/design-system';
 
 import { trpc } from '~/utils/trpc';
-import { Guestbook } from '../../../constants/schemas';
+import { Guestbook } from '~/constants/schemas';
 
 type GuestBookEntryProps = {
   entry: Guestbook;

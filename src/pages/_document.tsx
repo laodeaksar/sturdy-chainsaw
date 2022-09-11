@@ -1,12 +1,8 @@
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
 
-import { createGetInitialProps } from '@mantine/next';
-
-const getInitialProps = createGetInitialProps();
+import { getCssText } from '@laodeaksarr/design-system';
 
 export default class Document extends NextDocument {
-  static getInitialProps = getInitialProps;
-
   render() {
     return (
       <Html lang="en">
@@ -30,8 +26,26 @@ export default class Document extends NextDocument {
             content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
             name="robots"
           />
+          <style
+            id="stitches"
+            dangerouslySetInnerHTML={{ __html: getCssText() }}
+          />
         </Head>
-        <body>
+        <body className="laodeaksar-light">
+          <script
+            key="laodeaksar-theme"
+            dangerouslySetInnerHTML={{
+              __html: `(function () {
+                try {
+                  var mode = localStorage.getItem('mode')
+                  var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true
+                  if (!mode && supportDarkMode) document.body.classList.add('laodeaksar-dark')
+                  if (!mode) return
+                  document.body.classList.add('laodeaksar-' + mode)
+                } catch (e) {}
+              })()`,
+            }}
+          />
           <Main />
           <NextScript />
         </body>

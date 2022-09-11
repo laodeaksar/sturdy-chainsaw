@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 import { signOut, useSession } from 'next-auth/react';
-
 import { Button, Card, Text } from '@laodeaksarr/design-system';
+
+import { trpc } from '~/utils/trpc';
 
 import GuestbookBody from './GuestbookBody';
 import GuestbookEntry from './GuestbookEntry';
-import { trpc } from '~/utils/trpc';
 
 const Guestbook = () => {
   const { data: session, status } = useSession();
@@ -20,7 +20,7 @@ const Guestbook = () => {
             as="p"
             css={{
               marginTop: 0,
-              marginBottom: '$2'
+              marginBottom: '$2',
             }}
           >
             Share a message for a future visitor of my site.
@@ -35,7 +35,7 @@ const Guestbook = () => {
             <Button
               css={{
                 my: 4,
-                $$background: 'transparent !important'
+                $$background: 'transparent !important',
               }}
               variant="icon"
               onClick={() => signOut()}

@@ -28,11 +28,11 @@ body {
 
 const CenterFlexCss = `
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 450px;
-    color: currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 450px;
+  color: currentColor;
 }
 `;
 

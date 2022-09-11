@@ -1,34 +1,32 @@
 import { withTRPC } from '@trpc/next';
-import type { AppType } from 'next/dist/shared/lib/utils';
 import superjson from 'superjson';
-
 import { SessionProvider } from 'next-auth/react';
+import type { Session } from 'next-auth';
+import type { AppProps } from 'next/app';
 import { createWSClient, wsLink } from '@trpc/client/links/wsLink';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
+import {
+  globalStyles,
+  ThemeProvider,
+  Tooltip,
+} from '@laodeaksarr/design-system';
 
 import { AppRouter } from '~/server/router';
-import { MantineProvider } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
 
-const MyApp: AppType = ({
+const MyApp = ({
   Component,
-  pageProps: { session, ...pageProps },
-}) => {
+  pageProps,
+}: AppProps<{ session: Session }>): JSX.Element => {
+  globalStyles();
+
   return (
-    <SessionProvider session={session}>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme: 'light',
-        }}
-      >
-        <NotificationsProvider>
+    <ThemeProvider>
+      <SessionProvider session={pageProps.session}>
+        <Tooltip.Provider>
           <Component {...pageProps} />
-        </NotificationsProvider>
-      </MantineProvider>
-    </SessionProvider>
+        </Tooltip.Provider>
+      </SessionProvider>
+    </ThemeProvider>
   );
 };
 

@@ -3,7 +3,7 @@ import {
   SandpackPreview,
   SandpackCodeEditor,
   SandpackLayout,
-  SandpackPredefinedTemplate
+  SandpackPredefinedTemplate,
 } from '@codesandbox/sandpack-react';
 
 import { Shadows, styled } from '@laodeaksarr/design-system';
@@ -20,14 +20,14 @@ const theme = {
     error: 'var(--laodeaksar-colors-danger)',
     surface3: 'var(--laodeaksar-colors-emphasis)',
     surface2: 'var(--laodeaksar-border-color)',
-    surface1: 'var(--laodeaksar-snippet-background)'
+    surface1: 'var(--laodeaksar-snippet-background)',
   },
 
   syntax: {
     plain: 'var(--token-comment)',
 
     comment: {
-      color: 'var(--token-comment)'
+      color: 'var(--token-comment)',
     },
 
     keyword: 'var(--token-keyword)',
@@ -36,22 +36,22 @@ const theme = {
     definition: 'var(--token-function)',
     property: 'var(--token-function)',
     static: 'var(--token-comment)',
-    string: 'var(--token-selector)'
+    string: 'var(--token-selector)',
   },
 
   font: {
     body: 'var(--fonts-display)',
     mono: 'var(--fonts-mono)',
     size: '14px',
-    lineHeight: '26px'
-  }
+    lineHeight: '26px',
+  },
 };
 
 const defaultEditorOptions = {
   showNavigator: false,
   showInlineErrors: true,
   showLineNumbers: true,
-  editorHeight: 520
+  editorHeight: 520,
 };
 
 // Styles
@@ -63,7 +63,7 @@ const SandpackWrapper = styled('div', {
     shadow: `${Shadows[1]}`,
 
     '@media (max-width: 750px)': {
-      display: 'block'
+      display: 'block',
     },
 
     '@media (max-width: 1200px)': {
@@ -72,21 +72,21 @@ const SandpackWrapper = styled('div', {
       right: '50%',
       marginLeft: '-50vw',
       marginRight: '-50vw',
-      borderRadius: '0px'
+      borderRadius: '0px',
     },
 
     '@media (min-width: 1200px)': {
       position: 'relative',
       width: 'calc(100% + 200px)',
-      mx: '-100px'
-    }
+      mx: '-100px',
+    },
   },
 
   '.cm-gutterElement': {
     fontSize: '12px',
     userSelect: 'none',
     opacity: '1',
-    color: 'var(--laodeaksar-colors-typeface-tertiary)'
+    color: 'var(--laodeaksar-colors-typeface-tertiary)',
   },
 
   '.button': {
@@ -94,9 +94,9 @@ const SandpackWrapper = styled('div', {
     cursor: 'pointer !important',
 
     '&:hover': {
-      backgroundColor: 'var(--laodeaksar-colors-body)!important'
-    }
-  }
+      backgroundColor: 'var(--laodeaksar-colors-body)!important',
+    },
+  },
 });
 
 // TODO extends from sandpack type
@@ -123,7 +123,7 @@ const Sandpack = (props: SandpackProps) => {
     template,
     autorun = true,
     editorOnly = false,
-    renderOnly = false
+    renderOnly = false,
   } = props;
   const editorPart = props.options?.editorWidthPercentage || 50;
   const previewPart = 100 - editorPart;
@@ -138,7 +138,7 @@ const Sandpack = (props: SandpackProps) => {
     vue: '',
     vue3: '',
     svelte: '',
-    solid: ''
+    solid: '',
   };
 
   return (
@@ -148,13 +148,13 @@ const Sandpack = (props: SandpackProps) => {
         theme={theme}
         files={{
           ...files,
-          ...defaultFilesByTemplate[template]
+          ...defaultFilesByTemplate[template],
         }}
         customSetup={{
-          dependencies: dependencies || {}
+          dependencies: dependencies || {},
         }}
         options={{
-          autorun
+          autorun,
         }}
       >
         <SandpackLayout>
@@ -165,7 +165,7 @@ const Sandpack = (props: SandpackProps) => {
                 height: defaultEditorOptions.editorHeight,
                 flexGrow: previewPart,
                 flexShrink: previewPart,
-                minWidth: 700 * (previewPart / (previewPart + editorPart))
+                minWidth: 700 * (previewPart / (previewPart + editorPart)),
               }}
             />
           )}
@@ -176,7 +176,7 @@ const Sandpack = (props: SandpackProps) => {
                 height: defaultEditorOptions.editorHeight,
                 flexGrow: editorPart,
                 flexShrink: editorPart,
-                minWidth: 700 * (editorPart / (previewPart + editorPart))
+                minWidth: 700 * (editorPart / (previewPart + editorPart)),
               }}
             />
           )}
