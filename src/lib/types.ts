@@ -1,3 +1,21 @@
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+
+import type { Post as PostOut } from '@prisma/client';
+
+export type Post = PostOut & {
+  body: MDXRemoteSerializeResult;
+  description: string;
+  featured?: boolean;
+  colorFeatured?: string;
+  fontFeatured?: string;
+  cover?: string;
+  readingTime: string;
+  image: any;
+  tags: any[];
+  url: any;
+  tweets: any[];
+};
+
 export enum Form {
   Initial,
   Loading,

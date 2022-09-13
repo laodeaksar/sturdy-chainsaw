@@ -1,3 +1,6 @@
+import '~/styles/global.css';
+import '~/styles/font.css';
+
 import { withTRPC } from '@trpc/next';
 import superjson from 'superjson';
 import { SessionProvider } from 'next-auth/react';

@@ -60,7 +60,7 @@ const Guestbook = () => {
           )}
         </Card.Header>
         <Card.Body>
-          <Suspense>
+          <Suspense fallback={null}>
             {entries &&
               entries.map((entry) => (
                 <GuestbookEntry

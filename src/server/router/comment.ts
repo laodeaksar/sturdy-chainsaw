@@ -6,16 +6,16 @@ import { createRouter } from './context';
 export const commentRouter = createRouter()
   .query('all-comments', {
     input: z.object({
-      permalink: z.string(),
+      slug: z.string(),
     }),
     async resolve({ ctx, input }) {
-      const { permalink } = input;
+      const { slug } = input;
 
       try {
         const comments = await ctx.prisma.comment.findMany({
           where: {
             Post: {
-              permalink,
+              slug,
             },
           },
           include: {
@@ -43,12 +43,12 @@ export const commentRouter = createRouter()
   .mutation('add-comment', {
     input: z.object({
       body: z.string(),
-      permalink: z.string(),
+      slug: z.string(),
       parentId: z.string().optional(),
     }),
 
     async resolve({ ctx, input }) {
-      const { body, permalink, parentId } = input;
+      const { body, slug, parentId } = input;
 
       const user = ctx.session?.user;
 
@@ -58,7 +58,7 @@ export const commentRouter = createRouter()
             body,
             Post: {
               connect: {
-                permalink,
+                slug,
               },
             },
             user: {

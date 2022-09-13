@@ -5,7 +5,7 @@ import { TRPCError } from '@trpc/server';
 
 import { createRouter } from './context';
 
-const getPermaLink = (title: string) =>
+const getslug = (title: string) =>
   title
     .toLowerCase()
     .trim()
@@ -20,21 +20,21 @@ export const postRouter = createRouter()
         select: {
           id: true,
           title: true,
-          permalink: true,
+          slug: true,
         },
       });
     },
   })
-  .query('find-by-permalink', {
+  .query('find-by-slug', {
     input: z.object({
-      permalink: z.string(),
+      slug: z.string(),
     }),
     async resolve({ ctx, input }) {
-      const { permalink } = input;
+      const { slug } = input;
 
       const post = await ctx.prisma.post.findUnique({
         where: {
-          permalink,
+          slug,
         },
         select: {
           title: true,
@@ -57,6 +57,54 @@ export const postRouter = createRouter()
       return post;
     },
   })
+  .query('get-views', {
+    input: z.object({
+      slug: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const { slug } = input;
+
+      const views = await ctx.prisma.views.findUnique({
+        where: {
+          slug,
+        },
+      });
+
+      if (!views) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+        });
+      }
+
+      const total = views.count.toString();
+
+      return total;
+    },
+  })
+  .mutation('set-views', {
+    input: z.object({
+      slug: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const { slug } = input;
+
+      const newOrUpdatedViews = await ctx.prisma.views.upsert({
+        where: { slug },
+        create: {
+          slug,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      });
+
+      const total = newOrUpdatedViews.count.toString();
+
+      return total;
+    },
+  })
   .middleware(async ({ ctx, next }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({
@@ -74,9 +122,7 @@ export const postRouter = createRouter()
     resolve({ ctx, input }) {
       const { title, body } = input;
 
-      const permalink = `${getPermaLink(title)}-${crypto
-        .randomBytes(2)
-        .toString('hex')}`;
+      const slug = `${getslug(title)}-${crypto.randomBytes(2).toString('hex')}`;
 
       const user = ctx.session?.user;
 
@@ -84,13 +130,13 @@ export const postRouter = createRouter()
         data: {
           title,
           body: sanitizeHtml(body, {
-            allowedTags: ['b', 'i', 'em', 'strong', 'a'],
+            allowedTags: ['b', 'i', 'em', 'strong', 'a', 'code'],
             allowedAttributes: {
               a: ['href'],
             },
             allowedIframeHostnames: ['www.youtube.com'],
           }),
-          permalink,
+          slug,
           user: {
             connect: {
               id: user?.id,

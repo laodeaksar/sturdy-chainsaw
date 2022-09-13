@@ -1,5 +1,6 @@
 import { createReactQueryHooks } from '@trpc/react';
 import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
+import PostPage from '~/pages/posts';
 
 import { AppRouter } from '~/server/router';
 
@@ -30,3 +31,5 @@ export type Comment = inferQueryOutput<'comments.all-comments'>[number];
 export type CommentWithChildren = Comment & {
   children: CommentWithChildren[];
 };
+
+export type PostOut = inferQueryOutput<'posts.find-by-slug'>;

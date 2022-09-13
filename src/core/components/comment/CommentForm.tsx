@@ -13,7 +13,7 @@ function CommentForm({ parentId }: { parentId?: string }) {
     },
   });
 
-  const permalink = router.query.permalink as string;
+  const slug = router.query.slug as string;
 
   const utils = trpc.useContext();
 
@@ -24,7 +24,7 @@ function CommentForm({ parentId }: { parentId?: string }) {
       utils.invalidateQueries([
         'comments.all-comments',
         {
-          permalink,
+          slug,
         },
       ]);
     },
@@ -33,7 +33,7 @@ function CommentForm({ parentId }: { parentId?: string }) {
   function handleSubmit(values: { body: string }) {
     const payload = {
       ...values,
-      permalink,
+      slug,
       parentId,
     };
 

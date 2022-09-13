@@ -10,12 +10,12 @@ import CommentForm from './CommentForm';
 function CommentSection() {
   const router = useRouter();
 
-  const permalink = router.query.slug as string;
+  const slug = router.query.slug as string;
 
   const { data } = trpc.useQuery([
     'comments.all-comments',
     {
-      permalink,
+      slug,
     },
   ]);
 

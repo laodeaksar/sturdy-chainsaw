@@ -10,7 +10,7 @@ import { useForm } from '@mantine/form';
 import { trpc } from '~/utils/trpc';
 
 const MarkdownEditor = dynamic(
-  () => import('@uiw/react-markdown-editor').then((mod) => mod.default),
+  () => import('@uiw/react-markdown-editor').then(mod => mod.default),
   { ssr: false }
 );
 
@@ -25,7 +25,7 @@ function CreatePostPage() {
 
   const { isLoading, mutate } = trpc.useMutation(['posts.create-post'], {
     onSuccess(post) {
-      router.push(`/posts/${post.permalink}`);
+      router.push(`/posts/${post.slug}`);
     },
   });
 
@@ -52,7 +52,7 @@ function CreatePostPage() {
 
         <MarkdownEditor
           value="<p>Your initial <b>html value</b> or an empty string to init editor without value</p>"
-          onChange={(value) => {
+          onChange={value => {
             form.setFieldValue('body', value);
           }}
         />

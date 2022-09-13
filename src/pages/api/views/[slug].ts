@@ -18,16 +18,16 @@ export default async function handler(
   }
 
   try {
-    const permalink = req.query.permalink as string;
+    const slug = req.query.slug as string;
 
-    if (!permalink) {
-      return BadRequest(res, 'Invalid permalink');
+    if (!slug) {
+      return BadRequest(res, 'Invalid slug');
     }
 
     if (req.method === 'GET') {
       const views = await prisma.views.findUnique({
         where: {
-          permalink,
+          slug,
         },
       });
 
@@ -40,7 +40,7 @@ export default async function handler(
 
     const post = await prisma.post.findUnique({
       where: {
-        permalink,
+        slug,
       },
     });
 
@@ -49,9 +49,9 @@ export default async function handler(
     }
 
     const newOrUpdatedViews = await prisma.views.upsert({
-      where: { permalink },
+      where: { slug },
       create: {
-        permalink,
+        slug,
       },
       update: {
         count: {

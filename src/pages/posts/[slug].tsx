@@ -1,23 +1,25 @@
-import { Container, Title, Skeleton, Text } from '@mantine/core';
+import { Title, Skeleton, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 
 import CommentSection from '~/theme/components/comment/CommentSection';
+import Layout from '~/theme/layout';
+
 import { trpc } from '~/utils/trpc';
 
 function PostPage() {
   const router = useRouter();
 
-  const permalink = router.query.permalink as string;
+  const slug = router.query.slug as string;
 
   const { data: postData, isLoading } = trpc.useQuery([
-    'posts.find-by-permalink',
+    'posts.find-by-slug',
     {
-      permalink,
+      slug,
     },
   ]);
 
   return (
-    <Container>
+    <Layout>
       <Skeleton visible={isLoading}>
         <Title>{postData?.title}</Title>
       </Skeleton>
@@ -38,7 +40,7 @@ function PostPage() {
       </Skeleton>
 
       <CommentSection />
-    </Container>
+    </Layout>
   );
 }
 
