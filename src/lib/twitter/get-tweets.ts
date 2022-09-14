@@ -49,16 +49,17 @@ export const getTweets = async (ids: string[]) => {
 
   return tweets.data.reduce(
     // @ts-ignore
-    (allTweets: Record<string, TransformedTweet>[], tweet: TweetData) => {
+    (allTweets: Record<string, TransformedTweet>, tweet: TweetData) => {
       const tweetWithAuthor = {
         ...tweet,
         media:
-          tweet?.attachments?.media_keys.map((key) =>
-            tweets.includes.media.find((media) => media.media_key === key)
+          tweet?.attachments?.media_keys.map(key =>
+            tweets.includes.media.find(media => media.media_key === key)
           ) || [],
         referenced_tweets: getReferencedTweets(tweet),
         author: getAuthorInfo(tweet.author_id),
       };
+      // @ts-ignore
       return [tweetWithAuthor, ...allTweets];
     },
     [] as unknown as Record<string, TransformedTweet>

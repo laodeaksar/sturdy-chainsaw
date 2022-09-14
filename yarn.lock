@@ -353,11 +353,12 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@laodeaksarr/design-system@1.0.14":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@laodeaksarr/design-system/-/design-system-1.0.14.tgz#ba758ba5b44a47d2276c6e9246755c3296371edc"
-  integrity sha512-NQE0++9CUluUHrZL98HSSkf8RNWY+/mJ2LHjtNXtfL/1VnfwXVl1CfHc8xdlfu+wmH1/cKoJGii8cg6vWhfS6A==
+"@laodeaksarr/design-system@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@laodeaksarr/design-system/-/design-system-1.0.16.tgz#102fa197f8ad9914dac482c252347770317c34e9"
+  integrity sha512-DT4HpddDpy9PxXheQBGFCUxCpawK11hdB/LZVF4IS045WROEiTKnUDWJe4rmGlNtwyZBwxWJ44od8Gd1VWWAEA==
   dependencies:
+    "@radix-ui/react-accordion" "^1.0.0"
     "@radix-ui/react-alert-dialog" "^1.0.0"
     "@radix-ui/react-avatar" "^1.0.0"
     "@radix-ui/react-tabs" "^1.0.0"
@@ -666,6 +667,21 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@radix-ui/react-accordion@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-accordion/-/react-accordion-1.0.0.tgz#bf69dc1f13fce05d6d7560ff79954c49abc1b71b"
+  integrity sha512-F4vrzev+f1gjrWiU+IFQIzN43fYyvQ+AN0OicHYoDddis53xnPC0DKm16Ks4/XjvmqbISAR/FscYX0vymEHxcA==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-collapsible" "1.0.0"
+    "@radix-ui/react-collection" "1.0.0"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-id" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.0"
+    "@radix-ui/react-use-controllable-state" "1.0.0"
+
 "@radix-ui/react-alert-dialog@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-alert-dialog/-/react-alert-dialog-1.0.0.tgz#7fe3648f443382fc1765bed9c69b04113df7b031"
@@ -696,6 +712,21 @@
     "@radix-ui/react-context" "1.0.0"
     "@radix-ui/react-primitive" "1.0.0"
     "@radix-ui/react-use-callback-ref" "1.0.0"
+    "@radix-ui/react-use-layout-effect" "1.0.0"
+
+"@radix-ui/react-collapsible@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-collapsible/-/react-collapsible-1.0.0.tgz#0d94fc847c2d4bee1ab646d15c87bd3be6448873"
+  integrity sha512-NfZqWntvPsC43szs0NvumRjmTTJTLgaDOAnmVGDZaGsg2u6LcJwUT7YeYSKnlxWRQWN4pwwEfoYdWrtoutfO8g==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-id" "1.0.0"
+    "@radix-ui/react-presence" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.0"
+    "@radix-ui/react-use-controllable-state" "1.0.0"
     "@radix-ui/react-use-layout-effect" "1.0.0"
 
 "@radix-ui/react-collection@1.0.0":
@@ -3996,11 +4027,6 @@ react-dom@18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
-
-react-hook-form@^7.34.2:
-  version "7.35.0"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.35.0.tgz#b133de48fc84b1e62f9277ba79dfbacd9bb13dd3"
-  integrity sha512-9CYdOed+Itbiu5VMVxW0PK9mBR3f0gDGJcZEyUSm0eJbDymQ913TRs2gHcQZZmfTC+rtxyDFRuelMxx/+xwMcw==
 
 react-is@^16.13.1:
   version "16.13.1"

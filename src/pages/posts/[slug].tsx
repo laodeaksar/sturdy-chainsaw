@@ -1,4 +1,4 @@
-import { Title, Skeleton, Text } from '@mantine/core';
+import { H3, Skeleton, Text } from '@laodeaksarr/design-system';
 import { useRouter } from 'next/router';
 
 import CommentSection from '~/theme/components/comment/CommentSection';
@@ -21,7 +21,7 @@ function PostPage() {
   return (
     <Layout>
       <Skeleton visible={isLoading}>
-        <Title>{postData?.title}</Title>
+        <H3>{postData?.title}</H3>
       </Skeleton>
 
       <Skeleton visible={isLoading}>

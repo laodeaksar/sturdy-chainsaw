@@ -6,6 +6,7 @@ import {
   formatDate,
   Grid,
   Pill,
+  Skeleton,
   Text,
 } from '@laodeaksarr/design-system';
 
@@ -22,7 +23,7 @@ import type { Post } from '~/lib/types';
 const BlogLayout = ({
   children,
   post,
-}: React.PropsWithChildren<{ post: Post }>) => {
+}: React.PropsWithChildren<{ post: any }>) => {
   const {
     createdAt,
     updatedAt,
@@ -31,7 +32,6 @@ const BlogLayout = ({
     title,
     readingTime,
     image,
-    userId,
     // tags,
     // url
   } = post;
@@ -94,19 +94,11 @@ const BlogLayout = ({
                 </Link>
               </Box>
 
-              <Hero.Title className="p-name">{title}</Hero.Title>
+              <Skeleton visible>
+                <Hero.Title className="p-name">{title}</Hero.Title>
+              </Skeleton>
               <Hero.Info>
                 <Flex mb={3} wrap>
-                  {/*tags.map((tag) => (
-                    <Link
-                      key={tag.name}
-                      href={`/tags/${tag.slug}`}
-                      hastag
-                      discreet
-                    >
-                      {tag.name}
-                    </Link>
-                    ))*/}
                   <Text
                     as="p"
                     size="1"
@@ -127,23 +119,25 @@ const BlogLayout = ({
               {image && <Hero.Img className="u-photo" src={image} />}
             </Hero>
             <TableOfContent ids={ids} />
-            <Box
-              css={{
-                padding: '20px 0px',
-                gridColumn: '2',
-                color: 'var(--laodeaksar-colors-typeface-secondary)',
+            <Skeleton visible>
+              <Box
+                css={{
+                  padding: '20px 0px',
+                  gridColumn: '2',
+                  color: 'var(--laodeaksar-colors-typeface-secondary)',
 
-                h3: {
-                  marginTop: '2em',
-                },
+                  h3: {
+                    marginTop: '2em',
+                  },
 
-                section: {
-                  marginTop: '5em',
-                },
-              }}
-            >
-              {children}
-            </Box>
+                  section: {
+                    marginTop: '5em',
+                  },
+                }}
+              >
+                {children}
+              </Box>
+            </Skeleton>
           </Grid>
         </Suspense>
       </article>

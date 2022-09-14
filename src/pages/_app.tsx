@@ -11,6 +11,7 @@ import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import {
   globalStyles,
   ThemeProvider,
+  Toast,
   Tooltip,
 } from '@laodeaksarr/design-system';
 
@@ -25,9 +26,11 @@ const MyApp = ({
   return (
     <ThemeProvider>
       <SessionProvider session={pageProps.session}>
-        <Tooltip.Provider>
-          <Component {...pageProps} />
-        </Tooltip.Provider>
+        <Toast.Provider swipeDirection="right">
+          <Tooltip.Provider>
+            <Component {...pageProps} />
+          </Tooltip.Provider>
+        </Toast.Provider>
       </SessionProvider>
     </ThemeProvider>
   );

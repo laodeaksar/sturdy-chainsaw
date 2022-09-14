@@ -17,7 +17,7 @@ function CommentForm({ parentId }: { parentId?: string }) {
 
   const utils = trpc.useContext();
 
-  const { isLoading, mutate } = trpc.useMutation(['comments.add-comment'], {
+  const { isLoading, mutate, isSuccess } = trpc.useMutation(['comments.add-comment'], {
     onSuccess: () => {
       form.reset();
 
